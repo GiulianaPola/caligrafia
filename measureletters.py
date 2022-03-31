@@ -13,5 +13,5 @@ for filename in os.listdir(directory):
         cases = Image.open(f)
         sizes[f]=cases.width()
 
-with open("sizeletters.txt") as arquivo:
+with open("sizeletters.txt",w) as arquivo:
     arquivo.write(str(dict1))
