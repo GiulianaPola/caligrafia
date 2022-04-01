@@ -1,7 +1,8 @@
+from PIL import Image
 # import required module
 import os
 # assign directory
-directory = 'myfont'
+directory = 'sem fundo'
 sizes=dict()
  
 # iterate over files in
@@ -11,7 +12,7 @@ for filename in os.listdir(directory):
     # checking if it is a file
     if os.path.isfile(f):
         cases = Image.open(f)
-        sizes[f]=cases.width()
+        sizes[filename]=cases.width
 
-with open("sizeletters.txt",w) as arquivo:
-    arquivo.write(str(dict1))
+with open("sizeletters.txt","w") as arquivo:
+    arquivo.write(str(sizes))
