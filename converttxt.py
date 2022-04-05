@@ -1,3 +1,6 @@
+import os
+os.system("removebg.py")
+os.system("measureletters.py")
 with open("sizeletters.txt",'r') as arquivo:
     sizeletters=eval(arquivo.read())
 
@@ -42,12 +45,12 @@ def sylsplit(word):
                 syllables.append(word[j:])
     if '' in syllables:
         syllables.remove('')
-    print(syllables)
+    #print(syllables)
     return syllables
 
 #Importing Library
 from PIL import Image#Open the text file which you have to convert into handwriting
-txt='A conversão da glicose em glicose-6-fosfato por hexoquinase, a fosforilação do frutose-6-fosfato em frutose-1,6-bifosfato por fosfofrutoquinase-1, e a conversão do fosfoenolpiruvato em piruvato por piruvato quinase são essencialmente irreversíveis e não podem ser utilizados em gliconeogênese. As reações de compromisso são processos irreversíveis da glicólise. Como resultado, elas ajudam na continuação da reação. O primeiro processo irreversível impede que a glicose escape da célula. O segundo garante que os produtos lisados (gliceraldeído-3-fosfato + diidroxiacetona-fosfato) não recombinem, e o terceiro garante que o piruvato não retorne à sua posição original na via. ' # path of your text file#path of page(background)photo (I have used blank page)
+txt='O tema Cidadania no Brasil envolve diversos subtópicos super importantes de ressaltar, como os tópicos da Cidadania política, cidadania social e também a cidadania ambiental. O termo cidadania envolve uma afinidade entre o povo e o Estado, seja por meio dos direitos ou dos deveres, mostrando o que o povo pode e deve reivindicar(os direitos) e também o que o povo deve e pode fazer (os deveres). Os direitos intrínsecos na cidadania são os direitos civis, que garantem aos cidadãos direitos de movimentação social, e comunicação; há também os direitos políticos que garantem a movimentação política e expressão de opinião política do povo; além também da existência dos direitos sociais que garantem ao povo o acesso aos serviços que o Estado tem a obrigação de fornecer aos cidadãos.' # path of your text file#path of page(background)photo (I have used blank page)
 BG=Image.open("bg.png") 
 sizehyp=sizeletters["{}.png".format(str(ord('-')))]
 sheet_width=BG.width
@@ -145,4 +148,4 @@ for word in txt.split():
         last=' '
         gap+=size
 BG.show()
-#BG.save("teste.png")
+BG.save("teste.png")

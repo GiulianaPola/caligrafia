@@ -1,2 +1,6 @@
-print(250,chr(250))
-#print(letter,str(ord(letter)))
+for i in range(10000):
+    try:
+        print("{}\t{}\n".format(i,chr(i)))
+    except:
+        pass
+#print('→',str(ord('→')))
