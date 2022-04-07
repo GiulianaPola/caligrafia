@@ -1,9 +1,11 @@
 def run():
+    print("\nMeasuring the size of the letter's image...")
     from PIL import Image
     # import required module
     import os
     # assign directory
-    os.chdir('..')
+    #os.chdir('..')
+    #print(os.listdir(os.getcwd()))
     directory = 'sem fundo'
     sizes=dict()
     

@@ -1,14 +1,18 @@
 def run():
+    print("\nRemoving background from letters...")
     import cv2
     import numpy as np
     import os
 
+    directory='newfont'
     # #load image
-    for i in range(300):
+    for filename in os.listdir(directory):
         if os.path.isdir("newfont"):
             os.chdir("newfont")
-        if os.path.isfile('{}.png'.format(i)):
-            img = cv2.imread('{}.png'.format(i))
+        if os.path.isdir("newfont"):
+            os.chdir("newfont")
+        if os.path.isfile(filename):
+            img = cv2.imread(filename)
 
     # if True:
     #     filename='CamScanner 04-02-2022 16.19'
@@ -43,8 +47,10 @@ def run():
 
             #save resulting masked image
             os.chdir("..")
+            if not os.path.isdir("sem fundo"):
+              os.mkdir("sem fundo")
             os.chdir("sem fundo")
-            cv2.imwrite('{}.png'.format(i), result)
+            cv2.imwrite(filename.replace('jpg','png'), result)
             #cv2.imwrite('{}.png'.format(filename), result)
             os.chdir("..")
 
