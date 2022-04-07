@@ -1,6 +1,29 @@
+import unicodedata
+import re
+
+def slugify(value, allow_unicode=False):
+    """
+    Taken from https://github.com/django/django/blob/master/django/utils/text.py
+    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
+    dashes to single dashes. Remove characters that aren't alphanumerics,
+    underscores, or hyphens. Convert to lowercase. Also strip leading and
+    trailing whitespace, dashes, and underscores.
+    """
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize('NFKC', value)
+    else:
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value.lower())
+    return re.sub(r'[-\s]+', '-', value).strip('-_')
+
 import os
-os.system("removebg.py")
-os.system("measureletters.py")
+import removebg
+import measureletters
+
+removebg.run()
+measureletters.run()
+
 with open("sizeletters.txt",'r') as arquivo:
     sizeletters=eval(arquivo.read())
 
@@ -50,7 +73,7 @@ def sylsplit(word):
 
 #Importing Library
 from PIL import Image#Open the text file which you have to convert into handwriting
-txt='O tema Cidadania no Brasil envolve diversos subtópicos super importantes de ressaltar, como os tópicos da Cidadania política, cidadania social e também a cidadania ambiental. O termo cidadania envolve uma afinidade entre o povo e o Estado, seja por meio dos direitos ou dos deveres, mostrando o que o povo pode e deve reivindicar(os direitos) e também o que o povo deve e pode fazer (os deveres). Os direitos intrínsecos na cidadania são os direitos civis, que garantem aos cidadãos direitos de movimentação social, e comunicação; há também os direitos políticos que garantem a movimentação política e expressão de opinião política do povo; além também da existência dos direitos sociais que garantem ao povo o acesso aos serviços que o Estado tem a obrigação de fornecer aos cidadãos.' # path of your text file#path of page(background)photo (I have used blank page)
+txt='1. A gliconeogênese não é um processo inverso de glicólise, uma vez que nem todos os processos na via glicolítica são reversíveis, exigindo o contorno de tais reações para a gênese da glicose em vez de simplesmente reverter o processo. A glicólise e a gliconeogênese são, portanto, processos irreversíveis que são controlados separadamente por controles em estágios enzimáticos específicos em cada via. As três etapas irreversíveis são contornadas por um grupo distinto de enzimas, catalisando reações suficientemente exergônicas para serem efetivamente irreversíveis no sentido da síntese de glicose. Três reações da glicólise são essencialmente irreversíveis e não podem ser utilizadas na gliconeogênese: a conversão de glicose em glicose-6-fosfato catalisada pela piruvato-carboxilase, a fosforilação da frutose-6-fosfato em frutose-1,6-bifosfato catalisada pela frutose-1,6-bifosfatase e a conversão de fosfoenolpiruvato em piruvato catalisada pela glicose-6-fosfatase.' # path of your text file#path of page(background)photo (I have used blank page)
 BG=Image.open("bg.png") 
 sizehyp=sizeletters["{}.png".format(str(ord('-')))]
 sheet_width=BG.width
@@ -72,7 +95,16 @@ for word in txt.split():
     for syl in syllables:
         #print(syl, last)
         end=False
-        sizesyl=[sizeletters["{}.png".format(str(ord(letter)))] for letter in syl]
+        sizesyl=[]
+        for letter in syl:
+            try:
+                sizeletters["{}.png".format(str(ord(letter)))]
+            except:
+                print("\nMISSING 103")
+                print(letter,str(ord(letter)))
+                quit()
+            else:
+                sizesyl.append(sizeletters["{}.png".format(str(ord(letter)))])
         if syl==syllables[-1]:
             newgap=gap+sum(sizesyl)
         else:
@@ -83,7 +115,7 @@ for word in txt.split():
                 try:
                     cases = Image.open("sem fundo/{}.png".format(str(ord('-'))))
                 except:
-                    print("\nMISSING")
+                    print("\nMISSING 109")
                     print(letter,str(ord(letter)))
                     quit()
                 else:
@@ -91,13 +123,13 @@ for word in txt.split():
                     size = cases.width
                     height=cases.height
                     last='hypen'
-                    gap+=size 
-            gap,ht=0,ht+180
+                    gap+=size-2
+            gap,ht=0,ht+130
             if gap==0 and last=='-':
                 try:
                     cases = Image.open("sem fundo/{}.png".format(str(ord('-'))))
                 except:
-                    print("\nMISSING")
+                    print("\nMISSING 123")
                     print(letter,str(ord(letter)))
                     quit()
                 else:
@@ -105,12 +137,12 @@ for word in txt.split():
                     size = cases.width
                     height=cases.height
                     last='-'
-                    gap+=size 
+                    gap+=size-2
             for letter in syl:
                 try:
                     cases = Image.open("sem fundo/{}.png".format(str(ord(letter))))
                 except:
-                    print("\nMISSING")
+                    print("\nMISSING 136")
                     print(letter,str(ord(letter)))
                     quit()
                 else:
@@ -118,13 +150,13 @@ for word in txt.split():
                     size = cases.width
                     height=cases.height
                     last=letter
-                    gap+=size 
+                    gap+=size-2 
         else:
             for letter in syl:
                 try:
                     cases = Image.open("sem fundo/{}.png".format(str(ord(letter))))
                 except:
-                    print("\nMISSING")
+                    print("\nMISSING 150")
                     print(letter,str(ord(letter)))
                     quit()
                 else:
@@ -132,20 +164,20 @@ for word in txt.split():
                     size = cases.width
                     height=cases.height
                     #print(size)
-                    gap+=size
+                    gap+=size-2
                     last=letter
     end=True
     try:
         cases = Image.open("sem fundo/{}.png".format(str(ord(' '))))
     except:
-        print("\nMISSING")
-        print(letter,str(ord(letter)))
+        print("\nMISSING 164")
+        print(' ',str(ord(' ')))
         quit()
     else:
         BG.paste(cases, (gap, ht))
         size = cases.width
         height=cases.height
         last=' '
-        gap+=size
+        gap+=size-2
 BG.show()
-BG.save("teste.png")
+BG.save("{}.png".format(slugify(' '.join(txt.split(' ')[0:6]))))
