@@ -20,7 +20,9 @@ def slugify(value, allow_unicode=False):
 import os
 import removebg
 import measureletters
+import packages
 
+packages.run()
 removebg.run()
 measureletters.run()
 
@@ -73,7 +75,7 @@ def sylsplit(word):
 
 #Importing Library
 from PIL import Image#Open the text file which you have to convert into handwriting
-txt='1. A gliconeogênese não é um processo inverso de glicólise, uma vez que nem todos os processos na via glicolítica são reversíveis, exigindo o contorno de tais reações para a gênese da glicose em vez de simplesmente reverter o processo. A glicólise e a gliconeogênese são, portanto, processos irreversíveis que são controlados separadamente por controles em estágios enzimáticos específicos em cada via. As três etapas irreversíveis são contornadas por um grupo distinto de enzimas, catalisando reações suficientemente exergônicas para serem efetivamente irreversíveis no sentido da síntese de glicose. Três reações da glicólise são essencialmente irreversíveis e não podem ser utilizadas na gliconeogênese: a conversão de glicose em glicose-6-fosfato catalisada pela piruvato-carboxilase, a fosforilação da frutose-6-fosfato em frutose-1,6-bifosfato catalisada pela frutose-1,6-bifosfatase e a conversão de fosfoenolpiruvato em piruvato catalisada pela glicose-6-fosfatase.' # path of your text file#path of page(background)photo (I have used blank page)
+txt="3. O primeiro processo parcial, a carboxilação de biotina, supõe-se que leve duas fases, a primeira das quais é a ativação do bicarbonato por ATP para produzir um intermediário de carboxi-fosfato. O 1'-nitrogênio da biotina covalentemente ligado é posteriormente carboxilado, seja diretamente com carboxifosfato ou, mais comumente, via descarboxilação do intermediário para criar CO2, que então funciona como agente carboxilante.O aceptor do grupo carboxil é a forma enol da biotina, que tem um 1'-nitrogênio nucleofílico consideravelmente maior do que a forma keto. A carboxilação (transcarboxilação), a segunda reação parcial, parece ocorrer de forma gradual, com etapas de transferência de prótons flanqueando a etapa de transferência do núcleo carboxil entre a carboxilbiotina e a forma de enol de piruvato."# path of your text file#path of page(background)photo (I have used blank page)
 BG=Image.open("bg.png") 
 sizehyp=sizeletters["{}.png".format(str(ord('-')))]
 sheet_width=BG.width
@@ -81,6 +83,9 @@ gap, ht = 0, 0
 end=False
 last=''
 for word in txt.split():
+    upper=False
+    if word==word.upper():
+      upper=True
     if '-' in word:
         ws=[]
         words=word.split('-')
