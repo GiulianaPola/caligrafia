@@ -92,7 +92,8 @@ def sylsplit(word):
     #print(syllables)
     return syllables
 
-txt="3. O primeiro processo parcial, a carboxilação de biotina, supõe-se que leve duas fases, a primeira das quais é a ativação do bicarbonato por ATP para produzir um intermediário de carboxi-fosfato. O 1'-nitrogênio da biotina covalentemente ligado é posteriormente carboxilado, seja diretamente com carboxifosfato ou, mais comumente, via descarboxilação do intermediário para criar CO2, que então funciona como agente carboxilante. O aceptor do grupo carboxil é a forma enol da biotina, que tem um 1'-nitrogênio nucleofílico consideravelmente maior do que a forma keto. A carboxilação (transcarboxilação), a segunda reação parcial, parece ocorrer de forma gradual, com etapas de transferência de prótons flanqueando a etapa de transferência do núcleo carboxil entre a carboxilbiotina e a forma de enol de piruvato."# path of your text file#path of page(background)photo (I have used blank page)
+txt='Giuliana lopes pola 11779802'# path of your text file#path of page(background)photo (I have used blank page)
+txt=txt.replace('\n',' \n ')
 txt=txt.replace('.','. ')
 txt=txt.replace('  ',' ')
 from PIL import Image
@@ -103,10 +104,9 @@ gap, ht = 0, 0
 end=False
 last=''
 for word in txt.split():
-    upperl=False
-    if word==word.upper() and len(word)>1:
-      upperl=True
-    if '-' in word:
+    if word=='\n':
+        gap,ht=0,ht+145
+    elif '-' in word:
         ws=[]
         words=word.split('-')
         for w in words:
@@ -118,6 +118,9 @@ for word in txt.split():
     else:
         syllables=sylsplit(word)
     for syl in syllables:
+        upperl=False
+        if syl==syl.upper() and len(syl)>1:
+            upperl=True
         #print(syl, last)
         end=False
         sizesyl=[]
@@ -147,9 +150,9 @@ for word in txt.split():
                     BG.paste(cases, (gap, ht))
                     last='hypen'
                     gap+=sizeletters['{}.png'.format(str(ord('-')))]-2
-            gap,ht=0,ht+130
+            gap,ht=0,ht+145
             if gap==0 and last=='-':
-              writeletter('-',False)
+              writeletter('-',False,gap,ht)
               last=letter
             for letter in syl:
               writeletter(letter,upperl,gap,ht)
