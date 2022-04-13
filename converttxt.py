@@ -1,4 +1,6 @@
+txt="Bioquímica 2 - Atividade 3\nGiuliana Lopes Pola 11779802\nDesenhos nas últimas páginas!"
 import packages
+nfile=0
 
 try:
   import unicodedata
@@ -32,19 +34,25 @@ def slugify(value, allow_unicode=False):
     value = re.sub(r'[^\w\s-]', '', value.lower())
     return re.sub(r'[-\s]+', '-', value).strip('-_')
 
+import os
+my_dir = os.getcwd()
+for fname in os.listdir(my_dir):
+    if fname.startswith(slugify(' '.join(txt.split(' ')[0:6]))):
+        os.remove(os.path.join(my_dir, fname))
+
 def writeletter(letter,upperl,gap,ht):
   try:
     if upperl and letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-      filename="sem fundo/upper{}.png".format(str(ord(letter)))
+      filename="newfont/upper{}.png".format(str(ord(letter)))
     else:
-      filename="sem fundo/{}.png".format(str(ord(letter)))
+      filename="newfont/{}.png".format(str(ord(letter)))
     cases = Image.open(filename)
   except:
     print("\n42 MISSING")
     print(letter,str(ord(letter)),filename)
     quit()
   else:
-    BG.paste(cases, (gap, ht))
+    BG.paste(cases, (gap, ht),cases)
 
 with open("sizeletters.txt",'r') as arquivo:
     sizeletters=eval(arquivo.read())
@@ -92,7 +100,6 @@ def sylsplit(word):
     #print(syllables)
     return syllables
 
-txt='Giuliana lopes pola 11779802'# path of your text file#path of page(background)photo (I have used blank page)
 txt=txt.replace('\n',' \n ')
 txt=txt.replace('.','. ')
 txt=txt.replace('  ',' ')
@@ -100,12 +107,28 @@ from PIL import Image
 BG=Image.open("bg.png") 
 sizehyp=sizeletters["{}.png".format(str(ord('-')))]
 sheet_width=BG.width
+sheet_height=BG.height
 gap, ht = 0, 0
 end=False
 last=''
-for word in txt.split():
+for word in txt.split(' '):
     if word=='\n':
-        gap,ht=0,ht+145
+        if ht+160>=sheet_height:
+            if nfile==0:
+                BG.save("{}.png".format(slugify(' '.join(txt.split(' ')[0:6]))))
+            else:
+                BG.save("{}({}).png".format(slugify(' '.join(txt.split(' ')[0:6])),nfile))
+            nfile+=1
+            BG.close()
+            BG=Image.open("bg.png") 
+            gap,ht=0,0
+        else:
+            gap,ht=0,ht+147
+        last="\n"
+    elif len(word)==1:
+        writeletter(word,False,gap,ht)
+        last=word
+        gap+=sizeletters['{}.png'.format(str(ord(word)))]-5
     elif '-' in word:
         ws=[]
         words=word.split('-')
@@ -117,55 +140,77 @@ for word in txt.split():
         #print(ws)
     else:
         syllables=sylsplit(word)
-    for syl in syllables:
-        upperl=False
-        if syl==syl.upper() and len(syl)>1:
-            upperl=True
-        #print(syl, last)
-        end=False
-        sizesyl=[]
-        for letter in syl:
-            try:
-                sizeletters["{}.png".format(str(ord(letter)))]
-            except:
-                print("\n 125 MISSING")
-                print(letter,str(ord(letter)))
-                quit()
-            else:
-                sizesyl.append(sizeletters["{}.png".format(str(ord(letter)))])
-        if syl==syllables[-1]:
-            newgap=gap+sum(sizesyl)
-        else:
-            newgap=gap+sum(sizesyl)+sizehyp
-        if sheet_width < newgap:
-            #print(True)
-            if end==False and (last.isalpha() or last.isnumeric()):
+    if not syllables==[]:
+        for syl in syllables:
+            upperl=False
+            if syl==syl.upper() and len(syl)>1:
+                upperl=True
+            #print(syl, last)
+            end=False
+            sizesyl=[]
+            for letter in syl:
                 try:
-                    cases = Image.open("sem fundo/{}.png".format(str(ord('-'))))
+                    sizeletters["{}.png".format(str(ord(letter)))]
                 except:
-                    print("\n 140 MISSING")
+                    print("\n 125 MISSING")
                     print(letter,str(ord(letter)))
                     quit()
                 else:
-                    BG.paste(cases, (gap, ht))
-                    last='hypen'
-                    gap+=sizeletters['{}.png'.format(str(ord('-')))]-2
-            gap,ht=0,ht+145
-            if gap==0 and last=='-':
-              writeletter('-',False,gap,ht)
-              last=letter
-            for letter in syl:
-              writeletter(letter,upperl,gap,ht)
-              last=letter
-              gap+=sizeletters['{}.png'.format(str(ord(letter)))]-2
-        else:
-            for letter in syl:
-              writeletter(letter,upperl,gap,ht)
-              last=letter
-              gap+=sizeletters['{}.png'.format(str(ord(letter)))]-2
+                    sizesyl.append(sizeletters["{}.png".format(str(ord(letter)))])
+            if syl==syllables[-1]:
+                newgap=gap+sum(sizesyl)
+            else:
+                newgap=gap+sum(sizesyl)+sizehyp
+            if sheet_width < newgap:
+                #print(True)
+                if end==False and (last.isalpha() or last.isnumeric()):
+                    try:
+                        cases = Image.open("newfont/{}.png".format(str(ord('-'))))
+                    except:
+                        print("\n 140 MISSING")
+                        print(letter,str(ord(letter)))
+                        quit()
+                    else:
+                        BG.paste(cases, (gap, ht),cases)
+                        last='hypen'
+                        gap+=sizeletters['{}.png'.format(str(ord('-')))]-5
+                if ht+160>=sheet_height:
+                    if nfile==0:
+                        BG.save("{}.png".format(slugify(' '.join(txt.split(' ')[0:6]))))
+                    else:
+                        BG.save("{}({}).png".format(slugify(' '.join(txt.split(' ')[0:6])),nfile))
+                    nfile+=1
+                    BG.close()
+                    BG=Image.open("bg.png") 
+                    gap,ht=0,0
+                else:
+                    gap,ht=0,ht+147
+                if gap==0 and last=='-':
+                    writeletter('-',False,gap,ht)
+                    last=letter
+                for letter in syl:
+                    writeletter(letter,upperl,gap,ht)
+                    last=letter
+                    gap+=sizeletters['{}.png'.format(str(ord(letter)))]-5
+            else:
+                for letter in syl:
+                    writeletter(letter,upperl,gap,ht)
+                    last=letter
+                    gap+=sizeletters['{}.png'.format(str(ord(letter)))]-5
+    syllables=[]
     end=True
-    writeletter(' ',False,gap,ht)
-    last=' '
-    gap+=sizeletters['{}.png'.format(str(ord(' ')))]-2
+    if not word=="\n":
+        writeletter(' ',False,gap,ht)
+        last=' '
+        gap+=sizeletters['{}.png'.format(str(ord(' ')))]-5
 BG.show()
-BG.save("{}.png".format(slugify(' '.join(txt.split(' ')[0:6]))))
+if nfile==0:
+    BG.save("{}.png".format(slugify(' '.join(txt.split(' ')[0:6]))))
+else:
+    BG.save("{}({}).png".format(slugify(' '.join(txt.split(' ')[0:6])),nfile))
+
+import os
+my_dir = os.getcwd()
+for fname in os.listdir(my_dir):
+    if fname.startswith(slugify(' '.join(txt.split(' ')[0:6]))):
+        removebg.remove(os.path.join(my_dir, fname),False)

@@ -6,7 +6,7 @@ def run():
     # assign directory
     #os.chdir('..')
     #print(os.listdir(os.getcwd()))
-    directory = 'sem fundo'
+    directory = 'newfont'
     sizes=dict()
     
     # iterate over files in
