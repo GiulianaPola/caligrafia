@@ -1,4 +1,4 @@
-txt="Café-da-manhã: banana e farelo de aveia\nAlmoço: arroz branco, couve refogada no alho, salmão e batata\nJantar: Frango, alface, arroz branco e vagem"
+txt="1. O ciclo do ácido cítrico é uma parte importante do metabolismo porque combina atividades catabólicas e anabólicas e é controlado de perto em conjunto com outras vias metabólicas. Além disso, ele é necessário para a produção de energia, mas também serve a outros propósitos. Os intermediários do ciclo de quatro e cinco carbonos são utilizados para produzir uma ampla gama de produtos. Os processos anapleróticos (de reposição) são utilizados pelas células para reabastecer os intermediários que faltam. O ciclo do ácido cítrico é parte de um caminho anfibólico que também envolve a oxidação da glicose, ácidos graxos e aminoácidos."
 import packages
 nfile=0
 

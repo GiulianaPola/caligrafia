@@ -46,7 +46,7 @@ def run():
     import os
 
     # #load image
-    for filename in os.listdir(r"C:\Users\giuli\Desktop\caligrafia\newfont"):
+    for filename in os.listdir("newfont"):
         if os.path.isfile(os.path.abspath(filename)):
             remove(os.path.isfile(os.path.abspath(filename)),True)
 run()
