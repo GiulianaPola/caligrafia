@@ -1,4 +1,4 @@
-txt="1. O ciclo do ácido cítrico é uma parte importante do metabolismo porque combina atividades catabólicas e anabólicas e é controlado de perto em conjunto com outras vias metabólicas. Além disso, ele é necessário para a produção de energia, mas também serve a outros propósitos. Os intermediários do ciclo de quatro e cinco carbonos são utilizados para produzir uma ampla gama de produtos. Os processos anapleróticos (de reposição) são utilizados pelas células para reabastecer os intermediários que faltam. O ciclo do ácido cítrico é parte de um caminho anfibólico que também envolve a oxidação da glicose, ácidos graxos e aminoácidos."
+txt="Bioquímica 2\nAtividade 4 - Ciclo do Ácido Cítrico\nGiuliana Lopes Pola - 11779802"
 import packages
 nfile=0
 
@@ -120,6 +120,7 @@ gap, ht = 0, 0
 endword=False
 last=''
 for word in txt.split(' '):
+    upperl=False
     syllables=[]
     if word=='\n':
         if ht+160>=sheet_height:
@@ -144,19 +145,21 @@ for word in txt.split(' '):
         syllables=ws
         #print(ws)
     else:
-        if word==word.upper():
+        if word==word.upper() and len(word)>1:
             syllables=[word]
+            upperl=True
         else:
             syllables=sylsplit(word)
     if not syllables==[]:
         for syl in syllables:
             if gap>0:
                 gap+=-5
-            upperl=False
             if len(syl)>1 and not syl[1:]==syl[1:].lower():
                 upperl=True
-            elif len(syl)==1 and not syl in "OAÉ":
+                print("if len(syl)>1 and not syl[1:]==syl[1:].lower():")
+            elif len(syl)==1 and not syl==syllables[0]:
                 upperl=True
+                print("elif len(syl)==1 and not syl in 'OAÉ':")
             #print(syl, last)
             endword=False
             sizesyl=[]
