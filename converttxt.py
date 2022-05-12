@@ -1,4 +1,4 @@
-txt="Bioquímica 2\nAtividade 4 - Ciclo do Ácido Cítrico\nGiuliana Lopes Pola - 11779802"
+txt="10. Em repouso e durante o exercício, o músculo esquelético é o local primário da oxidação dos ácidos graxos. O exercício de resistência aumenta a capacidade oxidativa do músculo aumentando os níveis de PPARa. Os triacilgliceróis incluem ácidos graxos que dão aos animais uma grande quantidade de energia oxidativa. No intestino delgado, os sais biliares emulsionam os triacilgliceróis dietéticos, que são posteriormente hidrolisados pelas lipases intestinais, absorvidos pelas células epiteliais intestinais, reconvertidos em triacilgliceróis e convertidos em quilomícrons pela interação com certas apolipoproteínas. Os triacilgliceróis são entregues aos tecidos através de quilomícrons, onde a lipoproteína lipase libera ácidos graxos livres para entrada celular. A enzima triacilglicerol lipase sensível aos hormônios libera triacilgliceróis acumulados no tecido adiposo. O coração e os músculos esqueléticos requerem ácidos graxos, e os ácidos graxos do sangue estão ligados à albumina do soro. Uma vez dentro da célula, a membrana externa mitocondrial converte os ácidos graxos em tioésteres de acil-CoA graxos. A carnitina transporta a acil-coA graxo para as mitocôndrias em três estágios. Na etapa inicial da β-oxidação, quatro métodos removem cada unidade de acetil-CoA de uma extremidade saturada de acil-carboxil-CoA: A β-hidroxiacil-CoA desidrogenase ligada a NAD desidrata a L-β-hidroxiacil-CoA resultante, e a tiolase cliva-se a β-cetoacil-CoA para produzir aceto. O processo é reiniciado pela adição de acil-CoA graxo. A acetil-CoA é convertida em CO2 durante a segunda etapa de oxidação dos ácidos graxos do ciclo do ácido cítrico. Durante a etapa de fosforilação oxidativa, a abordagem recupera uma quantidade significativa da energia livre produzida pela oxidação dos ácidos graxos como ATP. A Malonil-CoA inibe a carnitina-aciltransferase I, impedindo a entrada de ácidos graxos nas mitocôndrias. Isto evita a quebra dos ácidos graxos e permite que a síntese ocorra. A oxidação dos ácidos graxos não saturados requer o uso de duas enzimas adicionais: enoil-CoA-isomerase e 2,4-dienoil-CoA redutase. O caminho da β-oxidação converte ácidos graxos de número ímpar em acetil-CoA e uma molécula de propionil-CoA. Esta é carboxilada a metilmalonil CoA, que é isomerizada por metilmalonil CoA mutase a succinil CoA. Peroxisomas e mitocôndrias passam por quatro fases de β-oxidação. O primeiro processo de oxidação, por outro lado, transfere elétrons diretamente para O2, dando H2O2. Os peroxissomas oxidam os ácidos graxos de cadeia longa e ramificados no tecido animal. Os processos de ω-oxidação no retículo endoplasmático criam intermediários dicarboxílicos acil-grafeno, que podem ser β-oxidados em ambas as extremidades para produzir succinato. Os mecanismos de α-oxidação destroem os ácidos graxos ramificados como o ácido fitânico."
 import packages
 nfile=0
 
@@ -156,10 +156,11 @@ for word in txt.split(' '):
                 gap+=-5
             if len(syl)>1 and not syl[1:]==syl[1:].lower():
                 upperl=True
-                print("if len(syl)>1 and not syl[1:]==syl[1:].lower():")
-            elif len(syl)==1 and not syl==syllables[0]:
-                upperl=True
-                print("elif len(syl)==1 and not syl in 'OAÉ':")
+                #print(syl,"if len(syl)>1 and not syl[1:]==syl[1:].lower():")
+            elif len(syl)==1:
+                if syl in "IVXLCDM" or not syl==syllables[0]:
+                    upperl=True
+                #print(syl,"elif len(syl)==1 and not syl in 'OAÉ':")
             #print(syl, last)
             endword=False
             sizesyl=[]

@@ -1,7 +1,9 @@
+import cv2
+import numpy as np
+import os
+
 def remove(filename,letter):
-    import cv2
-    import os
-    import numpy as np
+
     img = cv2.imread(filename)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # threshold input image as mask
@@ -41,12 +43,10 @@ def remove(filename,letter):
             
 def run():
     print("\nRemoving background from letters...")
-    import cv2
-    import numpy as np
-    import os
 
     # #load image
     for filename in os.listdir("newfont"):
         if os.path.isfile(os.path.abspath(filename)):
             remove(os.path.isfile(os.path.abspath(filename)),True)
 run()
+#remove("FIGURA 9.png",False)
